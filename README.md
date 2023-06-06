@@ -1,4 +1,4 @@
-# Project Name - Backend
+# Project Name - BookStore
 url of the backend :-https://bookstore-ksae.onrender.com/.
 This is the backend component of the BookStore project. It provides the necessary APIs and functionality to support the frontend application.
 
