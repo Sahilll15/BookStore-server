@@ -32,7 +32,7 @@ This is the backend component of the BookStore project. It provides the necessar
 - `GET /api/book/getbooks`: Retrieve all books.
 - `GET /api/book/getbook/:id`: Retrieve a book by ID.
 - `POST /api/book/addbook`: Add a new book.
-- `PUT /api/book/updatebook/:id`: Update a book by ID.
+- `PATCH /api/book/updatebook/:id`: Update a book by ID.
 - `DELETE /api/book/deletebook/:id`: Delete a book by ID.
 - ... (Add other API endpoints as applicable)
 
