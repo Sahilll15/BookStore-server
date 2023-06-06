@@ -38,8 +38,9 @@ This is the backend component of the BookStore project. It provides the necessar
 
 ## Authentication and Authorization
 
-- User registration: `POST /api/user/register`
-- User login: `POST /api/user/login`
+- User registration: `POST /api/auth/register`
+- User login: `POST /api/auth/login`
+- Super User creation:`POST /api/auth/createsuper`
 - Protected routes: Use the provided `verifyToken` middleware to authenticate and authorize requests.
 
 ## Error Handling
