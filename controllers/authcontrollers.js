@@ -18,7 +18,7 @@ module.exports.register = async (req, res) => {
         const newUser = await User.create({ name, email, password: hashedpassword, role, createdAt });
 
 
-        const token = jwt.sign({ UserId: newUser._id }, jwtSecret);
+        const token = jwt.sign({ UserId: newUser._id }, jwtSecret, { expiresIn: '1h' });
         res.status(200).json({ msg: "User created successfully", user: newUser, token })
 
     } catch (error) {
@@ -45,7 +45,7 @@ module.exports.login = async (req, res) => {
             token = jwt.sign({ UserId: user._id }, jwtSecret)
 
         } else {
-            token = jwt.sign({ UserId: user._id }, jwtSecret_super)
+            token = jwt.sign({ UserId: user._id }, jwtSecret_super, { expiresIn: '1h' })
         }
         res.status(200).json({ msg: "User logged in successfully", user: user, userId: user._id, token: token })
     } catch (error) {
@@ -71,7 +71,7 @@ module.exports.createSuperUser = async (req, res, next) => {
             role: "superuser"
         });
         await superUser.save();
-        const token = jwt.sign({ userId: superUser._id }, jwtSecret_super);
+        const token = jwt.sign({ userId: superUser._id }, jwtSecret_super, { expiresIn: '1h' });
         req.user = superUser;
         next();
 
