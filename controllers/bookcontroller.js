@@ -25,7 +25,6 @@ module.exports.getBooks = async (req, res) => {
     try {
         let query = {};
 
-
         if (req.query.search) {
             const searchRegex = new RegExp(req.query.search, 'i');
             query = {
@@ -37,19 +36,27 @@ module.exports.getBooks = async (req, res) => {
             };
         }
 
-
         if (req.query.filter) {
-
             query.author = { $in: req.query.filter };
         }
 
-        const books = await Book.find(query);
+        let sortOption = {};
+
+        if (req.query.sort === 'price') {
+            sortOption = { price: 1 }; // Sort by price in ascending order
+        } else if (req.query.sort === 'latest') {
+            sortOption = { createdAt: -1 }; // Sort by latest books (based on createdAt field) in descending order
+        }
+
+        const books = await Book.find(query).sort(sortOption);
+
         res.status(200).json({ books });
     } catch (error) {
         console.log(error);
         res.status(500).json({ error: 'Server Error' });
     }
 };
+;
 
 module.exports.getBookbyID = async (req, res) => {
     const id = req.params.id;
@@ -90,14 +97,15 @@ module.exports.updatebook = async (req, res) => {
         if (!book) {
             return res.status(400).json({ msg: "Book not found" })
         }
-        const newbook = await Book.findByIdAndUpdate({
+
+        const newbook = await Book.findByIdAndUpdate(id, {
             title, author, description, price, image
         })
         res.status(200).json({ msg: "Book updated successfully", book: newbook })
 
     } catch (error) {
         console.log(error)
-        res.status(500).json({ msg: "Error in updating the book or must be some server error" })
+        res.status(500).json({ msg: "Error in updating the book or must be some server error", error })
 
     }
 }
